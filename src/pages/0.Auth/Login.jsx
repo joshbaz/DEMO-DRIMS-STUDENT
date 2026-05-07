@@ -42,8 +42,7 @@ const Login = () => {
           initialValues={{ email: '', password: '', remember: false }}
           validationSchema={Yup.object({
             email: Yup.string()
-              .email('Please enter a valid email address')
-              .required('Email is required'),
+              .required('Registration Number or Email is required'),
             password: Yup.string().required('Password is required'),
           })}
           validateOnChange={true}
@@ -90,10 +89,10 @@ const Login = () => {
             <Form>
               {/* Email Field */}
               <div className="mb-3">
-                <label htmlFor="email" className="text-sm">Email or Username</label>
+                <label htmlFor="email" className="text-sm">Registration Number or Email</label>
                 <Field
                   name="email"
-                  type="email"
+                  type="text"
                   autoComplete="username"
                   className={`w-full mt-1 px-3 py-2 rounded-md border text-base focus:outline-none focus:ring-2 focus:ring-blue-400 ${errors.email && touched.email ? 'border-red-500' : 'border-gray-300'}`}
                   onInput={() => setFieldError('email', '')}
