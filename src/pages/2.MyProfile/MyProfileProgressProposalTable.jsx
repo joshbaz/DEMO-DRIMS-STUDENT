@@ -84,7 +84,7 @@ const MyProfileProgressProposalTable = ({
         const statuses = info.getValue();
         const currentStatus = statuses?.length > 0 ? statuses[statuses.length - 1] : null;
         const statusName = currentStatus?.definition?.name || 'PENDING';
-        
+
         return (
           <span
             style={{
@@ -112,7 +112,7 @@ const MyProfileProgressProposalTable = ({
       cell: (info) => {
         const defenses = info.row.original.defenses || [];
         const currentDefense = defenses.find(defense => defense.isCurrent);
-        
+
         if (currentDefense && currentDefense.scheduledDate) {
           return format(new Date(currentDefense.scheduledDate), 'PP');
         } else if (info.getValue()) {
@@ -126,18 +126,18 @@ const MyProfileProgressProposalTable = ({
       cell: (info) => {
         const defenses = info.row.original.defenses || [];
         let status = 'NOT GRADED';
-        
+
         // Find the current defense if it exists
         const currentDefense = defenses.find(defense => defense.isCurrent);
-        
+
         if (currentDefense && currentDefense.verdict) {
           if (currentDefense.verdict.toLowerCase().includes('pass')) {
             status = 'PASSED';
           } else if (currentDefense.verdict.toLowerCase().includes('fail')) {
             status = 'FAILED';
           }
-        } else if (info.row.original.averageDefenseMark !== null && 
-                  info.row.original.averageDefenseMark !== undefined) {
+        } else if (info.row.original.averageDefenseMark !== null &&
+          info.row.original.averageDefenseMark !== undefined) {
           // Fallback to the average mark if no verdict is found
           status = info.row.original.averageDefenseMark >= 60 ? 'PASSED' : 'FAILED';
         }
@@ -154,7 +154,7 @@ const MyProfileProgressProposalTable = ({
       cell: (info) => {
         const defenses = info.row.original.defenses || [];
         const currentDefense = defenses.find(defense => defense.isCurrent);
-        
+
         return (
           <div className="flex flex-col">
             {currentDefense?.verdict ? (
@@ -199,13 +199,13 @@ const MyProfileProgressProposalTable = ({
   const hasFailedProposalReviewFinished = useMemo(() => {
     if (!proposals || proposals.length === 0) return false;
 
-    console.log('proposals', proposals);
-    
+
+
     // Get the most recent proposal
     const latestProposal = proposals.find(proposal => proposal.isCurrent) || proposals[0];
     const statuses = latestProposal.statuses || [];
     const currentStatus = statuses.length > 0 ? statuses[statuses.length - 1] : null;
-    
+
     return currentStatus?.definition?.name?.toLowerCase() === 'failed-proposal review finished';
   }, [proposals]);
 
@@ -221,9 +221,7 @@ const MyProfileProgressProposalTable = ({
     return (
       <div className="p-8 text-center">
         <p className="text-gray-500 mb-3">Proposal Not Submitted</p>
-        <button onClick={handleSubmitProposal} className="px-4 py-2 bg-[#23388F] text-white text-sm font-medium rounded-lg hover:bg-blue-700">
-          Submit Proposal
-        </button>
+
       </div>
     );
   }
@@ -255,14 +253,18 @@ const MyProfileProgressProposalTable = ({
           {/** resubmit proposal button */}
           <div className="flex items-center">
             {hasFailedProposalReviewFinished && (
-              <button 
-                onClick={handleSubmitProposal} 
+              <>
+                {/* <button
+                onClick={handleSubmitProposal}
                 className={`px-4 py-2 ${hasFailedProposalReviewFinished ? 'bg-[#DC2626] hover:bg-red-700' : 'bg-[#23388F] hover:bg-blue-700'} text-white text-sm font-medium rounded-lg flex items-center gap-2`}
                 disabled={!hasFailedProposalReviewFinished && proposals.length > 0}
               >
                 <Icon icon="material-symbols:add" width="18" height="18" />
                 {hasFailedProposalReviewFinished ? 'Resubmit Proposal (Required)' : 'Resubmit Proposal'}
-              </button>
+              </button> */}
+                <p className={`px-4 py-2 ${hasFailedProposalReviewFinished ? 'bg-[#DC2626] hover:bg-red-700' : 'bg-[#23388F] hover:bg-blue-700'} text-white text-sm font-medium rounded-lg flex items-center gap-2`}>{hasFailedProposalReviewFinished ? 'Resubmit Proposal (Required)' : 'Resubmit Proposal'}</p>
+              </>
+
             )}
           </div>
         </div>
@@ -334,11 +336,10 @@ const MyProfileProgressProposalTable = ({
             (pageNumber) => (
               <button
                 key={pageNumber}
-                className={`w-8 h-8 rounded text-sm ${
-                  pageNumber === table.getState().pagination.pageIndex + 1
-                    ? "bg-blue-50 text-blue-600 font-[Roboto-Medium]"
-                    : "text-gray-500"
-                }`}
+                className={`w-8 h-8 rounded text-sm ${pageNumber === table.getState().pagination.pageIndex + 1
+                  ? "bg-blue-50 text-blue-600 font-[Roboto-Medium]"
+                  : "text-gray-500"
+                  }`}
                 onClick={() => table.setPageIndex(pageNumber - 1)}
               >
                 {pageNumber}
