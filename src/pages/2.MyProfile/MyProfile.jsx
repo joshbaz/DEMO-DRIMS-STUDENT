@@ -74,39 +74,39 @@ const MyProfile = () => {
      
 
       {/* Header */}
-      <div className="flex justify-between items-center px-6 py-6">
-        <h1 className="text-2xl font-[Inter-Medium]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 sm:px-6 py-4 sm:py-6 gap-2">
+        <h1 className="text-xl sm:text-2xl font-[Inter-Medium]">
           My Profile
         </h1>
-        <span className="text-sm font-[Inter-Regular] text-gray-500">
+        <span className="text-xs sm:text-sm font-[Inter-Regular] text-gray-500">
           Last login: {format(new Date(), "MM-dd-yyyy hh:mm:ssaa")}
         </span>
       </div>
 
       {/* Progress and Settings Tabs */}
-      <div className="px-6 py-4 mb-4">
+      <div className="px-4 sm:px-6 py-2 sm:py-4 mb-4">
         <div className="bg-white p-4 rounded-[10px] shadow-md">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-4">
-              <span className="text-lg font-[Inter-SemiBold] text-gray-900">
+              <span className="text-base sm:text-lg font-[Inter-SemiBold] text-gray-900">
                 Reg. Number: {studentData?.student?.registrationNumber || "N/A"}
               </span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
               <button
                 onClick={() => setActiveTab("progress")}
-                className={`inline-flex items-center px-4 py-2 rounded-[6px] text-sm font-[Inter-Medium] gap-2 text-semantic-text-primary border-2
+                className={`inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-[6px] text-xs sm:text-sm font-[Inter-Medium] gap-2 text-semantic-text-primary border-2 cursor-pointer
                   ${activeTab === "progress" ? "border-[#23388F]" : "border-[#C4C5C6]"}`}
               >
-                <Icon icon="material-symbols:browse-activity-sharp" width="22" height="22" className="text-[#626263]" />
+                <Icon icon="material-symbols:browse-activity-sharp" width="20" height="20" className="text-[#626263]" />
                 Progress
               </button>
               <button
                 onClick={() => setActiveTab("settings")}
-                className={`inline-flex items-center px-4 py-2 rounded-[6px] text-sm font-[Inter-Medium] gap-2 text-[#070B1D] border-2
+                className={`inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-[6px] text-xs sm:text-sm font-[Inter-Medium] gap-2 text-[#070B1D] border-2 cursor-pointer
                   ${activeTab === "settings" ? "border-[#23388F]" : "border-[#C4C5C6]"}`}
               >
-                <Icon icon="material-symbols:manufacturing" width="22" height="22" className="text-[#626263]" />
+                <Icon icon="material-symbols:manufacturing" width="20" height="20" className="text-[#626263]" />
                 Account Settings
               </button>
             </div>
@@ -114,7 +114,7 @@ const MyProfile = () => {
         </div>
       </div>
 
-      <div className="px-6 py-4 mb-4">
+      <div className="px-4 sm:px-6 py-2 sm:py-4 mb-4">
         {activeTab === "progress" && <MyProfileProgressPage studentData={studentData} />}
         {activeTab === "settings" && <MyProfileAccountSettings studentData={studentData} />}
       </div>

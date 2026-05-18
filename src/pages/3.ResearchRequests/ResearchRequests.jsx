@@ -45,9 +45,9 @@ const ResearchRequests = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#fafbfc] p-6">
+      <div className="min-h-screen bg-[#fafbfc] p-4 md:p-6">
         <div className="flex justify-center items-center h-64">
-          <div className="text-lg text-gray-600">Loading research requests...</div>
+          <div className="text-lg text-gray-600 font-[Inter-Medium]">Loading research requests...</div>
         </div>
       </div>
     );
@@ -55,13 +55,13 @@ const ResearchRequests = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#fafbfc] p-6">
+      <div className="min-h-screen bg-[#fafbfc] p-4 md:p-6">
         <div className="flex justify-center items-center h-64">
           <div className="text-center">
-            <div className="text-lg text-red-600 mb-4">{error.message || 'Failed to load research requests. Please try again.'}</div>
+            <div className="text-lg text-red-600 mb-4 font-[Inter-Medium]">{error.message || 'Failed to load research requests. Please try again.'}</div>
             <button 
               onClick={() => refetch()}
-              className="px-4 py-2 bg-[#6c2bd7] text-white rounded-lg hover:bg-[#4b1fa3]"
+              className="px-4 py-2 bg-[#6c2bd7] text-white rounded-lg hover:bg-[#4b1fa3] cursor-pointer"
             >
               Try Again
             </button>
@@ -72,64 +72,66 @@ const ResearchRequests = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#fafbfc] p-6">
+    <div className="min-h-screen bg-[#fafbfc] p-4 md:p-6">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold">Research Requests</h2>
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-6 gap-2">
+        <h2 className="text-xl sm:text-2xl font-semibold">Research Requests</h2>
         <span className="text-xs text-gray-500">Last login : {format(new Date(), 'dd-MM-yyyy hh:mm:ssa')}</span>
       </div>
 
       {/* Progress Cards */}
       <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-4">Progress</h3>
-        <div className="grid grid-cols-4 gap-4">
-          <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center">
-            <span className="text-2xl font-bold">{stats.requested}</span>
-            <span className="text-gray-500 text-sm">Total Requests</span>
+        <h3 className="text-base sm:text-lg font-semibold mb-4">Progress</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center border border-gray-100">
+            <span className="text-xl sm:text-2xl font-bold text-gray-800">{stats.requested}</span>
+            <span className="text-gray-500 text-xs sm:text-sm">Total Requests</span>
           </div>
-          <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center">
-            <span className="text-2xl font-bold">{stats.pending}</span>
-            <span className="text-gray-500 text-sm">Pending</span>
+          <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center border border-gray-100">
+            <span className="text-xl sm:text-2xl font-bold text-yellow-600">{stats.pending}</span>
+            <span className="text-gray-500 text-xs sm:text-sm">Pending</span>
           </div>
-          <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center">
-            <span className="text-2xl font-bold">{stats.beingProcessed}</span>
-            <span className="text-gray-500 text-sm">Being Processed</span>
+          <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center border border-gray-100">
+            <span className="text-xl sm:text-2xl font-bold text-blue-600">{stats.beingProcessed}</span>
+            <span className="text-gray-500 text-xs sm:text-sm">Being Processed</span>
           </div>
-          <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center">
-            <span className="text-2xl font-bold">{stats.concluded}</span>
-            <span className="text-gray-500 text-sm">Concluded</span>
+          <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col items-center border border-gray-100">
+            <span className="text-xl sm:text-2xl font-bold text-green-600">{stats.concluded}</span>
+            <span className="text-gray-500 text-xs sm:text-sm">Concluded</span>
           </div>
         </div>
       </div>
 
       {/* Table Controls */}
-      <div className="flex flex-wrap items-center justify-between mb-2 gap-2">
-        <div className="flex items-center gap-2 flex-1 min-w-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
+        <div className="flex items-center gap-2 w-full sm:max-w-xs">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by request type, status, or decision..."
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full max-w-xs"
+            placeholder="Search by request type, status..."
+            className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
           />
         </div>
-        <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-500">Show:</label>
-          <select
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-              setPage(1);
-            }}
-            className="px-2 py-1 border border-gray-300 rounded-md text-sm"
-          >
-            {[10, 20, 30, 40, 50].map((size) => (
-              <option key={size} value={size}>{size}</option>
-            ))}
-          </select>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2">
+            <label className="text-xs sm:text-sm text-gray-500">Show:</label>
+            <select
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+                setPage(1);
+              }}
+              className="px-2 py-1 border border-gray-300 rounded-md text-xs sm:text-sm bg-white"
+            >
+              {[10, 20, 30, 40, 50].map((size) => (
+                <option key={size} value={size}>{size}</option>
+              ))}
+            </select>
+          </div>
           <button 
             onClick={() => navigate('/requests/submit')} 
-            className="ml-2 px-4 py-2 bg-[#6c2bd7] text-white text-sm font-medium rounded-lg hover:bg-[#4b1fa3]"
+            className="px-3 sm:px-4 py-2 bg-[#6c2bd7] text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-[#4b1fa3] cursor-pointer whitespace-nowrap"
           >
             Make a Request
           </button>

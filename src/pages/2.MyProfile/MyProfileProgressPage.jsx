@@ -280,7 +280,7 @@ const MyProfileProgressPage = ({ studentData }) => {
   return (
     <div className="space-y-6 ">
       {/* Section 1: Student Information Details */}
-      <div className="grid grid-cols-3 gap-x-4 gap-y-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-x-4 sm:gap-y-8">
         <div>
           <h3 className="text-sm font-[Inter-Regular] text-[#626263] mb-1">
             Supervisor(s)
@@ -396,15 +396,15 @@ const MyProfileProgressPage = ({ studentData }) => {
           )}
 
           {/* Timeline Progress Bar */}
-          <div className="space-y-2">
-            <div className="relative h-8 bg-white shadow-md flex gap-1">
+          <div className="space-y-2 overflow-x-auto pb-2 scrollbar-thin">
+            <div className="relative h-8 bg-white shadow-md flex gap-1 min-w-[700px]">
               {studentStatuses?.statuses?.slice().reverse().map((status, index) =>
                 renderTimelineBar(status, index)
               )}
             </div>
           </div>
           {/* Timeline Legend */}
-          <div className="flex flex-wrap items-center gap-3 mt-4 p-3 bg-white rounded-lg shadow-sm">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-4 p-3 bg-white rounded-lg shadow-sm">
             {studentStatuses?.statuses?.slice().reverse().map(renderTimelineLegend)}
           </div>
         </div>
@@ -466,36 +466,33 @@ const MyProfileProgressPage = ({ studentData }) => {
       {/* Section 3: Status Action Tracker and Proposal Table and Book Table */}
       <div className="bg-white rounded-lg py-2 space-y-4">
         {/* Options */}
-        <div className="flex gap-4 px-4 pt-4">
+        <div className="flex flex-wrap gap-2 px-4 pt-4">
           <button
             onClick={() => handleViewChange("tracker")}
-            className={`text-sm font-[Inter-Medium] border py-1 px-2 rounded-lg !cursor-pointer select-none ${
-              activeView === "tracker"
-                ? "border-secondary-800 bg-secondary-100  text-primary-800"
-                : "border-secondary-700 bg-white text-secondary-800"
-            }`}
+            className={`text-sm font-[Inter-Medium] border py-1.5 px-3 rounded-lg !cursor-pointer select-none
+              ${activeView === "tracker"
+                ? "border-secondary-800 bg-secondary-100 text-primary-800"
+                : "border-secondary-700 bg-white text-secondary-800"}`}
           >
             Status Action Tracker
           </button>
 
           <button
             onClick={() => handleViewChange("proposal")}
-            className={`text-sm font-[Inter-Medium] border py-1 px-2 rounded-lg !cursor-pointer select-none ${
-              activeView === "proposal"
-                ? "border-secondary-800 bg-secondary-100  text-primary-900"
-                : "border-secondary-700 bg-white text-secondary-800"
-            }`}
+            className={`text-sm font-[Inter-Medium] border py-1.5 px-3 rounded-lg !cursor-pointer select-none
+              ${activeView === "proposal"
+                ? "border-secondary-800 bg-secondary-100 text-primary-950"
+                : "border-secondary-700 bg-white text-secondary-800"}`}
           >
             Proposal
           </button>
 
           <button
             onClick={() => handleViewChange("book")}
-            className={`text-sm font-[Inter-Medium] border py-1 px-2 rounded-lg !cursor-pointer select-none ${
-              activeView === "book"
-                ? "border-secondary-800 bg-secondary-100  text-primary-900"
-                : "border-secondary-700 bg-white text-secondary-800"
-            }`}
+            className={`text-sm font-[Inter-Medium] border py-1.5 px-3 rounded-lg !cursor-pointer select-none
+              ${activeView === "book"
+                ? "border-secondary-800 bg-secondary-100 text-primary-950"
+                : "border-secondary-700 bg-white text-secondary-800"}`}
           >
             Dissertation
           </button>

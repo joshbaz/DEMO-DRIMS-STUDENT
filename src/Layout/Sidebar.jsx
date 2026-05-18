@@ -6,7 +6,7 @@ import { useGetLoggedInUser, useGetUnreadMessageCount } from '../store/tanstackS
 import { useQueryClient } from '@tanstack/react-query';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const Sidebar = () => {
+const Sidebar = ({ onClose }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
@@ -33,19 +33,29 @@ const Sidebar = () => {
   ];
 
   const handleLogout = useCallback(() => {
+    if (onClose) onClose();
     logout();
     // Reset all queries in the query client
     queryClient.clear(); // This clears all queries from the cache
     navigate('/login', { replace: true });
-  }, [logout, navigate, queryClient]);
+  }, [logout, navigate, queryClient, onClose]);
 
   return (
-    <aside className="w-56 bg-white shadow-md flex flex-col min-h-screen h-screen overflow-y-auto">
+    <aside className="w-full md:w-56 bg-white flex flex-col h-full overflow-y-auto">
       {/* Logo */}
-      <div className="px-4 py-4">
+      <div className="px-4 py-4 flex items-center justify-between">
         <div className="flex items-start">
           <img src="/Logo2.png" alt="UMI Logo" className="h-12 w-auto" />
         </div>
+        {/* Mobile close button inside sidebar */}
+        {onClose && (
+          <button 
+            onClick={onClose} 
+            className="md:hidden p-2 text-gray-500 hover:bg-gray-100 rounded-lg"
+          >
+            <Icon icon="mdi:close" className="w-5 h-5" />
+          </button>
+        )}
       </div>
       {/* User Info */}
       <div className="flex items-center gap-3 px-4 py-3 border-y border-[#E5E7EB]">
@@ -77,6 +87,7 @@ const Sidebar = () => {
               <NavLink
                 key={item.name}
                 to={item.path}
+                onClick={() => onClose && onClose()}
                 className={({ isActive: navActive }) =>
                   `flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-xs transition-colors ${
                     navActive || isActive
@@ -108,6 +119,7 @@ const Sidebar = () => {
               <NavLink
                 key={item.name}
                 to={item.path}
+                onClick={() => onClose && onClose()}
                 className={({ isActive: navActive }) =>
                   `flex items-center gap-3 px-4 py-2 rounded-lg font-medium text-xs transition-colors ${
                     navActive || isActive

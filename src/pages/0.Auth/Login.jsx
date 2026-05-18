@@ -13,7 +13,7 @@ const Login = () => {
   const [fieldError, setFieldError] = useState({ email: '', password: '' })
   const navigate = useNavigate()
   const { updateUser } = useContext(AuthContext)
-  
+
   // Use the login mutation
   const loginMutation = useLoginStudentMutation()
 
@@ -22,27 +22,27 @@ const Login = () => {
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
       {/* Logo and Title */}
       <img src="/Logo%20main.png" alt="UMI Logo" className="w-56 mb-2" />
-      <div className="flex gap-4 mb-4"> 
-          <button
-            className={`flex-1 h-10 px-3 py-2 rounded-md font-medium text-sm bg-[#E5F1FB] border border-[#ECF6FB]
+      <div className="flex gap-4 mb-4">
+        <button
+          className={`flex-1 h-10 px-3 py-2 rounded-md font-medium text-sm bg-[#E5F1FB] border border-[#ECF6FB]
                
             `}
-           
-          >
-            Student Portal
-          </button>
-        
-        </div>
+
+        >
+          Student Portal
+        </button>
+
+      </div>
       {/* Login Form Card */}
       <div className="bg-white rounded-2xl shadow-md p-10 min-w-[370px] max-w-[90vw]">
-      
+
         <h2 className="text-center mb-6 text-2xl font-bold">Sign In</h2>
         {/* Formik Login Form */}
         <Formik
           initialValues={{ email: '', password: '', remember: false }}
           validationSchema={Yup.object({
             email: Yup.string()
-              .required('Registration Number or Email is required'),
+              .required('Registration Number  is required'),
             password: Yup.string().required('Password is required'),
           })}
           validateOnChange={true}
@@ -51,22 +51,22 @@ const Login = () => {
             setFieldError('email', '')
             setFieldError('password', '')
             setStatus('')
-            
+
             try {
               const result = await loginMutation.mutateAsync({
                 email: values.email,
                 password: values.password,
                 rememberMe: values.remember
               })
-              
+
               setSubmitting(false)
               updateUser(result)
               navigate('/dashboard')
-              
+
             } catch (error) {
               setSubmitting(false)
               console.error('Login failed:', error)
-              
+
               // Handle different types of errors
               if (error.message) {
                 if (error.message.includes('Student not found') || error.message.includes('Invalid password')) {
@@ -89,7 +89,7 @@ const Login = () => {
             <Form>
               {/* Email Field */}
               <div className="mb-3">
-                <label htmlFor="email" className="text-sm">Registration Number or Email</label>
+                <label htmlFor="email" className="text-sm">Registration Numbers</label>
                 <Field
                   name="email"
                   type="text"

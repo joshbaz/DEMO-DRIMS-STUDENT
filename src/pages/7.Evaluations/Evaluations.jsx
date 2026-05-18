@@ -95,9 +95,9 @@ const Evaluations = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+      <div className="bg-white rounded-lg shadow-sm p-4 md:p-6 mb-4 md:mb-6">
         <div className="flex items-center gap-3">
           <ClipboardList className="w-8 h-8 text-blue-600" />
           <div>
@@ -197,7 +197,7 @@ const Evaluations = () => {
                       </p>
                       
                       {/* Satisfaction Summary */}
-                      <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                         <div className="flex items-center gap-2">
                           <BookOpen className="w-4 h-4 text-gray-400" />
                           <span className="text-gray-600">Research Training:</span>

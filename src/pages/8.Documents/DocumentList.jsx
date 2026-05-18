@@ -18,7 +18,7 @@ const DocumentList = ({ onDocumentSelect }) => {
 
   // Extract documents array from the response
   const documents = response?.documents || [];
-  
+
   // Socket event handler to update state
   const handleDocumentUpdate = useCallback((data) => {
     if (data.type === 'document_upload_success' || data.type === 'new_document_uploaded') {
@@ -61,10 +61,10 @@ const DocumentList = ({ onDocumentSelect }) => {
       queryClient.removeQueries({ queryKey: ['studentDocuments'] });
       queryClient.resetQueries({ queryKey: ['studentDocuments'] });
       queryClient.invalidateQueries({ queryKey: ['studentDocuments'] });
-      
+
       // Force a fresh refetch
       await queryClient.refetchQueries({ queryKey: ['studentDocuments'] });
-      
+
       toast.success('Document list refreshed successfully!');
     } catch (error) {
       console.error('Refresh error:', error);
@@ -79,13 +79,13 @@ const DocumentList = ({ onDocumentSelect }) => {
     onSuccess: (response, variables) => {
       // Get the document from the variables or find it in the documents array
       const documentRecord = documents.find(doc => doc.id === variables.documentId);
-      
+
       // Use the original filename from the document record
       const filename = documentRecord?.fileName || variables.filename || 'document';
-      
+
       // Get the blob data from the response
       const data = response.data;
-      
+
       // Create blob and download
       const blob = new Blob([data], { type: 'application/octet-stream' });
       const url = window.URL.createObjectURL(blob);
@@ -141,10 +141,10 @@ const DocumentList = ({ onDocumentSelect }) => {
   };
 
   const filteredDocuments = documents?.filter(doc => {
-    const matchesFilter = filter === 'ALL' || 
-                         (filter === 'REVIEWED' ? doc.isReviewed : doc.type === filter);
+    const matchesFilter = filter === 'ALL' ||
+      (filter === 'REVIEWED' ? doc.isReviewed : doc.type === filter);
     const matchesSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         doc.description?.toLowerCase().includes(searchTerm.toLowerCase());
+      doc.description?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
   }) || [];
 
@@ -168,7 +168,7 @@ const DocumentList = ({ onDocumentSelect }) => {
     <div>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
         <h2 className="text-lg font-semibold text-gray-900">My Documents</h2>
-        
+
         {/* Search and Filter */}
         <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
           <input
@@ -225,7 +225,7 @@ const DocumentList = ({ onDocumentSelect }) => {
           </svg>
           <h3 className="mt-2 text-sm font-medium text-gray-900">No documents found</h3>
           <p className="mt-1 text-sm text-gray-500">
-            {searchTerm || filter !== 'ALL' 
+            {searchTerm || filter !== 'ALL'
               ? 'Try adjusting your search or filter criteria.'
               : 'Get started by uploading your first document.'
             }
@@ -236,10 +236,10 @@ const DocumentList = ({ onDocumentSelect }) => {
           {filteredDocuments.map((document) => (
             <div
               key={document.id}
-              className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors cursor-pointer"
+              className="border border-gray-200 rounded-lg p-4 hover:bg-gray-100 transition-colors cursor-pointer"
               onClick={() => onDocumentSelect(document)}
             >
-              <div className="flex items-start justify-between">
+              <div className="flex items-center justify-between">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-2">
                     <h3 className="text-sm font-medium text-gray-900 truncate">
@@ -254,13 +254,13 @@ const DocumentList = ({ onDocumentSelect }) => {
                       </span>
                     )}
                   </div>
-                  
+
                   {document.description && (
                     <p className="text-sm text-gray-600 mb-2 line-clamp-2">
                       {document.description}
                     </p>
                   )}
-                  
+
                   <div className="flex items-center gap-4 text-xs text-gray-500">
                     <span>Uploaded: {format(new Date(document.uploadedAt), 'MMM dd, yyyy')}</span>
                     {document.uploadedBy && (
@@ -274,7 +274,7 @@ const DocumentList = ({ onDocumentSelect }) => {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-2 ml-4">
                   <button
                     onClick={(e) => {
@@ -282,9 +282,10 @@ const DocumentList = ({ onDocumentSelect }) => {
                       handleDownload(document);
                     }}
                     disabled={downloadMutation.isPending}
-                    className="p-3 text-gray-400 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md transition-colors duration-200 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="p-3 text-gray-400 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md transition-colors duration-200 hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed flex flex-row"
                     title="Download document"
                   >
+
                     {downloadMutation.isPending ? (
                       <svg className="w-6 h-6 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -294,6 +295,7 @@ const DocumentList = ({ onDocumentSelect }) => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     )}
+                    {downloadMutation.isPending ? 'Downloading...' : 'Download'}
                   </button>
                 </div>
               </div>
