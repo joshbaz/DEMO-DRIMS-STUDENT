@@ -5,14 +5,15 @@ import { format, isToday, isYesterday } from 'date-fns';
 import { useGetUnreadMessageCount } from '../../store/tanstackStore/services/queries';
 
 // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
-const API_URL = import.meta.env.VITE_API_URL || 'https://drimsapi.umi.ac.ug/api/v1';
+// const API_URL = import.meta.env.VITE_API_URL || 'https://drimsapi.umi.ac.ug/api/v1';
+const API_URL = 'https://drimsapi.alero.digital/api/v1';
 
 const DashboardDirectMessages = () => {
   const navigate = useNavigate();
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  
+
   const { data: unreadData } = useGetUnreadMessageCount();
   const unreadCount = unreadData?.unreadCount || 0;
 
@@ -27,11 +28,11 @@ const DashboardDirectMessages = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch conversations');
       }
-      
+
       const data = await response.json();
       setConversations(data.conversations || []);
     } catch (err) {
@@ -80,7 +81,7 @@ const DashboardDirectMessages = () => {
       <div className="">
         <div className="flex items-center justify-between mb-2">
           <span className="text-lg md:text-xl font-semibold">Direct Messages</span>
-          <button 
+          <button
             className="flex items-center gap-2 px-3 md:px-4 py-1 bg-[#25369B] text-white rounded-md text-base font-medium hover:bg-[#1d285c] transition"
             onClick={() => navigate('/direct-messages')}
           >
@@ -103,7 +104,7 @@ const DashboardDirectMessages = () => {
       <div className="">
         <div className="flex items-center justify-between mb-2">
           <span className="text-lg md:text-xl font-semibold">Direct Messages</span>
-          <button 
+          <button
             className="flex items-center gap-2 px-3 md:px-4 py-1 bg-[#25369B] text-white rounded-md text-base font-medium hover:bg-[#1d285c] transition"
             onClick={() => navigate('/direct-messages')}
           >
@@ -125,7 +126,7 @@ const DashboardDirectMessages = () => {
     <div className="">
       <div className="flex items-center justify-between mb-2">
         <span className="text-lg md:text-xl font-semibold">Direct Messages</span>
-        <button 
+        <button
           className="flex items-center gap-2 px-3 md:px-4 py-1 bg-[#25369B] text-white rounded-md text-base font-medium hover:bg-[#1d285c] transition relative"
           onClick={() => navigate('/direct-messages')}
         >
@@ -141,12 +142,12 @@ const DashboardDirectMessages = () => {
           </span>
         </button>
       </div>
-      
+
       {recentConversations.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-32 text-center">
           <Icon icon="mdi:message-outline" className="w-12 h-12 text-gray-300 mb-2" />
           <div className="text-gray-500 mb-2">No conversations yet</div>
-          <button 
+          <button
             className="px-4 py-2 bg-[#6c2bd7] text-white text-sm font-medium rounded-lg hover:bg-[#4b1fa3]"
             onClick={() => navigate('/direct-messages')}
           >
@@ -182,10 +183,10 @@ const DashboardDirectMessages = () => {
               </div>
             </div>
           ))}
-          
+
           {conversations.length > 3 && (
             <div className="pt-2">
-              <button 
+              <button
                 className="w-full text-center text-sm text-[#25369B] hover:text-[#1d285c] font-medium"
                 onClick={() => navigate('/direct-messages')}
               >
