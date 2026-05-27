@@ -3,10 +3,11 @@ import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
 import { format, isToday, isYesterday } from 'date-fns';
 import { useGetUnreadMessageCount } from '../../store/tanstackStore/services/queries';
+import { BASE_API_URL } from '../../utils/apiRequestUrl';
 
 // const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
 // const API_URL = import.meta.env.VITE_API_URL || 'https://drimsapi.umi.ac.ug/api/v1';
-const API_URL = 'https://drimsapi.alero.digital/api/v1';
+const API_URL = BASE_API_URL;
 
 const DashboardDirectMessages = () => {
   const navigate = useNavigate();
